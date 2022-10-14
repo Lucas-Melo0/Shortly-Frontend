@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   LeftDiv,
   LogoDiv,
@@ -21,13 +22,32 @@ function Header({ isLoggedIn }) {
       ) : null}
 
       <RightDiv>
-        <div>{isLoggedIn ? <p>Home</p> : <p>Entrar</p>}</div>
-        <div>{isLoggedIn ? <p>Ranking</p> : <p>Cadastrar-se</p>}</div>
         {isLoggedIn ? (
-          <div>
-            <p>Sair</p>
-          </div>
-        ) : null}
+          <>
+            <div>
+              <p>Home</p>
+            </div>
+            <div>
+              <p>Ranking</p>
+            </div>
+            <div>
+              <p>Sair</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <Link to="/login">
+                <p>Entrar</p>
+              </Link>
+            </div>
+            <div>
+              <Link to="/signup">
+                <p>Cadastrar-se</p>
+              </Link>
+            </div>
+          </>
+        )}
       </RightDiv>
     </Wrapper>
   );

@@ -23,6 +23,7 @@ const GreenButton = styled.button`
   background: #5d9040;
   border-radius: 12px;
   color: #ffffff;
+  cursor: pointer;
 `;
 
 const ButtonContainer = styled.div`

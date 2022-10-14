@@ -21,6 +21,11 @@ const Form = styled.form`
     border-radius: 12px;
     height: 50px;
   }
+  h5 {
+    display: flex;
+    justify-content: center;
+    color: crimson;
+  }
 `;
 
 export { LoginContainer, Form };
