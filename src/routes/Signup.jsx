@@ -11,6 +11,7 @@ function Signup() {
 
   const isLoading = status === "loading";
   const isSucess = status === "sucess";
+  const isError = status === "error";
 
   useEffect(() => {
     if (query === "") return;
@@ -49,6 +50,7 @@ function Signup() {
             placeholder="Confirmar senha"
             required
           />
+
           <Button
             type="submit"
             Name={
