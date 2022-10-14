@@ -7,7 +7,7 @@ import {
 import logo from "../assets/logo.png";
 
 // eslint-disable-next-line react/prop-types
-function Header({ isLoggedIn = false }) {
+function Header({ isLoggedIn }) {
   return (
     <Wrapper>
       <LogoDiv>

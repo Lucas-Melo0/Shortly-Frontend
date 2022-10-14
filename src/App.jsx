@@ -1,12 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import GlobalStyle from "./globalCss";
-import { Login } from "./routes/login";
+import { Signup } from "./routes/Signup";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <Login />
+      <Signup />
     </>
   );
 }
