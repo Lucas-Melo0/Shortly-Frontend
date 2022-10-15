@@ -1,12 +1,25 @@
+import { useState, useEffect } from "react";
 import {
   HomeHeader,
   RankingContainer,
   Wrapper,
 } from "../components/Containers/homeContainer";
 import { Header } from "../components/Header";
+import { getInfo } from "../API/axiosRequests";
 import trophy from "../assets/trophy.png";
 
 function Home() {
+  const [status, setStatus] = useState("idle");
+  const [data, setData] = useState("idle");
+
+  useEffect(() => {
+    setStatus("loading");
+    getInfo().then((responseData) => {
+      setData(responseData.data);
+      setStatus("sucess");
+    });
+  }, []);
+
   return (
     <>
       <Header />
@@ -16,11 +29,12 @@ function Home() {
           <p>Ranking</p>
         </HomeHeader>
         <RankingContainer>
-          <p>1. Fulaninha - 32 Links - 1.703.584 visualizações</p>
-          <p>1. Fulaninha - 32 Links - 1.703.584 visualizações</p>
-          <p>1. Fulaninha - 32 Links - 1.703.584 visualizações</p>
-          <p>1. Fulaninha - 32 Links - 1.703.584 visualizações</p>
-          <p>1. Fulaninha - 32 Links - 1.703.584 visualizações</p>
+          {data.map((value, index) => (
+            <p key={value.id}>
+              {index + 1}. {value.name} - {value.linksCount} Links -{" "}
+              {value.visitCount} visualizações
+            </p>
+          ))}
         </RankingContainer>
       </Wrapper>
     </>

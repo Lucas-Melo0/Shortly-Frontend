@@ -27,8 +27,10 @@ const RankingContainer = styled.div`
   row-gap: 5px;
   margin-top: 20px;
   padding: 15px;
+  overflow-y: auto;
   width: 100%;
   height: 250px;
+  max-height: 250px;
   background: #ffffff;
   border: 1px solid rgba(120, 177, 89, 0.25);
   box-shadow: 0px 4px 24px rgba(120, 177, 89, 0.12);
