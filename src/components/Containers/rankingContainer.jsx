@@ -2,12 +2,22 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   margin: 0 auto;
   width: 90%;
+  h4 {
+    margin-top: 20px;
+    font-family: "Lexend Deca";
+    font-weight: 700;
+    font-size: 36px;
+    text-align: center;
+    line-height: 45px;
+  }
 `;
 
-const HomeHeader = styled.div`
+const RankingHeader = styled.div`
   display: flex;
   margin-top: 50px;
   width: 90%;
@@ -43,4 +53,4 @@ const RankingContainer = styled.div`
   }
 `;
 
-export { Wrapper, HomeHeader, RankingContainer };
+export { Wrapper, RankingHeader, RankingContainer };

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoginContainer, Form } from "../components/Containers/loginContainer";
 import { Button } from "../components/Buttons/GreenButton";
 import { signin } from "../API/axiosRequests";
 import { Header } from "../components/Header";
 
-function Login() {
+function Login({ setUserData, userData }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("idle");
-  const [data, setData] = useState(null);
+  const navigate = useNavigate();
 
   const isLoading = status === "loading";
   const isSucess = status === "sucess";
@@ -18,8 +19,13 @@ function Login() {
     setStatus("loading");
     signin(query).then(
       (response) => {
-        setData(response.data);
+        setUserData({
+          ...userData,
+          token: response.data.token,
+          loggedIn: true,
+        });
         setStatus("sucess");
+        navigate("/");
       },
       (error) => {
         console.log(error);

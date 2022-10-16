@@ -1,18 +1,23 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Route, Routes } from "react-router-dom";
+import { useState } from "react";
 import GlobalStyle from "./globalCss";
-import { Home } from "./routes/Home";
+import { Ranking } from "./routes/Ranking";
 import { Login } from "./routes/Login";
 import { Signup } from "./routes/Signup";
 
 function App() {
+  const [userData, setUserData] = useState({ token: null, loggedIn: false });
   return (
     <>
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Ranking userData={userData} />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="login" element={<Login />} />
+        <Route
+          path="login"
+          element={<Login userData={userData} setUserData={setUserData} />}
+        />
       </Routes>
     </>
   );
