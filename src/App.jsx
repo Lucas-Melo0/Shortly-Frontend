@@ -5,6 +5,7 @@ import GlobalStyle from "./globalCss";
 import { Ranking } from "./routes/Ranking";
 import { Login } from "./routes/Login";
 import { Signup } from "./routes/Signup";
+import { Home } from "./routes/Home";
 
 function App() {
   const [userData, setUserData] = useState({ token: null, loggedIn: false });
@@ -13,6 +14,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Ranking userData={userData} />} />
+        <Route path="/home" element={<Home />} />
         <Route path="signup" element={<Signup />} />
         <Route
           path="login"
