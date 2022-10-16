@@ -67,6 +67,7 @@ const Trash = styled.div`
   align-items: center;
   justify-content: center;
   width: 18%;
+  cursor: pointer;
   height: 60px;
 
   background-color: #ffffff;

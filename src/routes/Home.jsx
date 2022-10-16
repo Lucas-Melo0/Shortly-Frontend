@@ -11,7 +11,7 @@ import {
   Trash,
 } from "../components/Containers/homeContainer";
 import { Header } from "../components/Header";
-import { getUserData, LinkShortner } from "../API/axiosRequests";
+import { deleteLink, getUserData, LinkShortner } from "../API/axiosRequests";
 
 function Home({ userData }) {
   const [query, setQuery] = useState(null);
@@ -27,11 +27,10 @@ function Home({ userData }) {
       }
     );
   }, [query, token]);
-
+  // useCallback
   useEffect(() => {
     getUserData(token).then(
       (response) => {
-        console.log("chegou aqui", userLinks);
         setUserLinks(response.data.shortenedUrls);
       },
       (error) => console.log(error)
@@ -42,8 +41,22 @@ function Home({ userData }) {
     e.preventDefault();
     const { url } = e.target.elements;
     setQuery({ url: url.value });
+    url.value = null;
+    getUserData(token).then(
+      (response) => {
+        setUserLinks(response.data.shortenedUrls);
+      },
+      (error) => console.log(error)
+    );
   };
-
+  const linkDeletion = (id) => {
+    deleteLink(id, token).then(
+      (response) => console.log(response),
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
   return (
     <>
       <Header isLoggedIn />
@@ -59,8 +72,8 @@ function Home({ userData }) {
             <ShortnedLink>
               <p>{value.url}</p>
               <p>{value.shortUrl}</p>
-              <p>{value.visitCount} Quantidade de visitante</p>
-              <Trash>
+              <p> Quantidade de visitante: {value.visitCount}</p>
+              <Trash onClick={() => linkDeletion(value.id)}>
                 <BsTrashFill size="25px" fill="red" />
               </Trash>
             </ShortnedLink>

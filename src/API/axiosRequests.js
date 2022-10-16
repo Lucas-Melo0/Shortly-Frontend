@@ -10,4 +10,8 @@ const LinkShortner = (data, token) =>
 const getUserData = (token) =>
   axiosBase.get("/users/me", { headers: { Authorization: `Bearer ${token}` } });
 
-export { signup, signin, getInfo, LinkShortner, getUserData };
+const deleteLink = (id, token) =>
+  axiosBase.delete(`/urls/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+export { signup, signin, getInfo, LinkShortner, getUserData, deleteLink };
