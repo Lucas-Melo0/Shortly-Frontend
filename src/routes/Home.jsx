@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import { BsTrashFill } from "react-icons/bs";
+import { useState, useEffect } from "react";
 import { Button } from "../components/Buttons/GreenButton";
 import {
   HomeContainer,
@@ -9,16 +11,36 @@ import {
   Trash,
 } from "../components/Containers/homeContainer";
 import { Header } from "../components/Header";
+import { LinkShortner } from "../API/axiosRequests";
 
-function Home() {
+function Home({ userData }) {
+  const [query, setQuery] = useState(null);
+  const { token } = userData;
+
+  useEffect(() => {
+    if (query === null) return;
+    LinkShortner(query, token).then(
+      (response) => console.log(response),
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, [query, token]);
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    const { url } = e.target.elements;
+    setQuery({ url: url.value });
+  };
+
   return (
     <>
       <Header isLoggedIn />
       <HomeContainer>
         <ShortnerContainer>
-          <LinkForm>
-            <input placeholder="Links que cabem no bolso" />
-            <Button Name="Encurtar Link" />
+          <LinkForm onSubmit={handleForm}>
+            <input id="url" placeholder="Links que cabem no bolso" />
+            <Button type="submit" Name="Encurtar Link" />
           </LinkForm>
         </ShortnerContainer>
         <UserLinks>

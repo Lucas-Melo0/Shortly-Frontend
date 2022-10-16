@@ -25,7 +25,7 @@ function Login({ setUserData, userData }) {
           loggedIn: true,
         });
         setStatus("sucess");
-        navigate("/");
+        navigate("/home");
       },
       (error) => {
         console.log(error);

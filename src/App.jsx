@@ -14,7 +14,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Ranking userData={userData} />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Home userData={userData} />} />
         <Route path="signup" element={<Signup />} />
         <Route
           path="login"

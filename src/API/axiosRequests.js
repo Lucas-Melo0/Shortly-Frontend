@@ -3,4 +3,9 @@ import { axiosBase } from "./axiosBase";
 const signup = (data) => axiosBase.post("/signup", data);
 const signin = (data) => axiosBase.post("/signin", data);
 const getInfo = () => axiosBase.get("/ranking");
-export { signup, signin, getInfo };
+const LinkShortner = (data, token) =>
+  axiosBase.post("/urls/shorten", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+export { signup, signin, getInfo, LinkShortner };
