@@ -11,10 +11,11 @@ import {
   Trash,
 } from "../components/Containers/homeContainer";
 import { Header } from "../components/Header";
-import { LinkShortner } from "../API/axiosRequests";
+import { getUserData, LinkShortner } from "../API/axiosRequests";
 
 function Home({ userData }) {
   const [query, setQuery] = useState(null);
+  const [userLinks, setUserLinks] = useState([]);
   const { token } = userData;
 
   useEffect(() => {
@@ -26,6 +27,16 @@ function Home({ userData }) {
       }
     );
   }, [query, token]);
+
+  useEffect(() => {
+    getUserData(token).then(
+      (response) => {
+        console.log("chegou aqui", userLinks);
+        setUserLinks(response.data.shortenedUrls);
+      },
+      (error) => console.log(error)
+    );
+  }, [token, query]);
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -39,19 +50,21 @@ function Home({ userData }) {
       <HomeContainer>
         <ShortnerContainer>
           <LinkForm onSubmit={handleForm}>
-            <input id="url" placeholder="Links que cabem no bolso" />
+            <input id="url" placeholder="Links que cabem no bolso" required />
             <Button type="submit" Name="Encurtar Link" />
           </LinkForm>
         </ShortnerContainer>
         <UserLinks>
-          <ShortnedLink>
-            <p>htttp.globo.com.br</p>
-            <p>34e23af</p>
-            <p>Quantidade de visitante</p>
-            <Trash>
-              <BsTrashFill size="25px" fill="red" />
-            </Trash>
-          </ShortnedLink>
+          {userLinks.map((value) => (
+            <ShortnedLink>
+              <p>{value.url}</p>
+              <p>{value.shortUrl}</p>
+              <p>{value.visitCount} Quantidade de visitante</p>
+              <Trash>
+                <BsTrashFill size="25px" fill="red" />
+              </Trash>
+            </ShortnedLink>
+          ))}
         </UserLinks>
       </HomeContainer>
     </>

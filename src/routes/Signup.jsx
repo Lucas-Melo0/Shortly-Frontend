@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { Oval } from "react-loader-spinner";
 import { Button } from "../components/Buttons/GreenButton";
 import { signup } from "../API/axiosRequests";
 import { LoginContainer, Form } from "../components/Containers/loginContainer";
