@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Oval } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Buttons/GreenButton";
 import { signup } from "../API/axiosRequests";
 import { LoginContainer, Form } from "../components/Containers/loginContainer";
@@ -8,7 +9,7 @@ import { Header } from "../components/Header";
 function Signup() {
   const [status, setStatus] = useState("idle");
   const [query, setQuery] = useState("");
-
+  const navigate = useNavigate();
   const isLoading = status === "loading";
   const isSucess = status === "sucess";
   const isError = status === "error";
@@ -18,7 +19,10 @@ function Signup() {
     setStatus("loading");
     signup(query)
       .then((response) => console.log(response))
-      .then(() => setStatus("sucess"))
+      .then(() => {
+        setStatus("sucess");
+        navigate("/login");
+      })
       .catch((error) => {
         setStatus("error");
         console.log(error);

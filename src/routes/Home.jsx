@@ -11,11 +11,17 @@ import {
   Trash,
 } from "../components/Containers/homeContainer";
 import { Header } from "../components/Header";
-import { deleteLink, getUserData, LinkShortner } from "../API/axiosRequests";
+import {
+  deleteLink,
+  getUserData,
+  goToUrl,
+  LinkShortner,
+} from "../API/axiosRequests";
 
 function Home({ userData }) {
   const [query, setQuery] = useState(null);
   const [userLinks, setUserLinks] = useState([]);
+  const [run, setRun] = useState(false);
   const { token } = userData;
 
   useEffect(() => {
@@ -27,15 +33,16 @@ function Home({ userData }) {
       }
     );
   }, [query, token]);
-  // useCallback
+
   useEffect(() => {
     getUserData(token).then(
       (response) => {
         setUserLinks(response.data.shortenedUrls);
+        setRun(!run);
       },
       (error) => console.log(error)
     );
-  }, [token, query]);
+  }, [token, query, run]);
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -51,7 +58,13 @@ function Home({ userData }) {
   };
   const linkDeletion = (id) => {
     deleteLink(id, token).then(
-      (response) => console.log(response),
+      (response) =>
+        getUserData(token).then(
+          (response) => {
+            setUserLinks(response.data.shortenedUrls);
+          },
+          (error) => console.log(error)
+        ),
       (error) => {
         console.log(error);
       }
@@ -71,7 +84,9 @@ function Home({ userData }) {
           {userLinks.map((value) => (
             <ShortnedLink>
               <p>{value.url}</p>
-              <p>{value.shortUrl}</p>
+              <a href={goToUrl(value.shortUrl)}>
+                <p>{value.shortUrl}</p>
+              </a>
               <p> Quantidade de visitante: {value.visitCount}</p>
               <Trash onClick={() => linkDeletion(value.id)}>
                 <BsTrashFill size="25px" fill="red" />
