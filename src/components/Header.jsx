@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import {
   LeftDiv,
@@ -8,7 +9,7 @@ import {
 import logo from "../assets/logo.png";
 
 // eslint-disable-next-line react/prop-types
-function Header({ isLoggedIn }) {
+function Header({ isLoggedIn, userData }) {
   return (
     <Wrapper>
       <LogoDiv>
@@ -17,7 +18,7 @@ function Header({ isLoggedIn }) {
       </LogoDiv>
       {isLoggedIn ? (
         <LeftDiv>
-          <p>Seja bem-vindo(a), Pessoa!</p>
+          <p>Seja bem-vindo(a), {userData?.name}!</p>
         </LeftDiv>
       ) : null}
 
@@ -25,13 +26,19 @@ function Header({ isLoggedIn }) {
         {isLoggedIn ? (
           <>
             <div>
-              <p>Home</p>
+              <Link to="/home">
+                <p>Home</p>
+              </Link>
             </div>
             <div>
-              <p>Ranking</p>
+              <Link to="/">
+                <p>Ranking</p>
+              </Link>
             </div>
             <div>
-              <p>Sair</p>
+              <Link to="/login">
+                <p>Sair</p>
+              </Link>
             </div>
           </>
         ) : (

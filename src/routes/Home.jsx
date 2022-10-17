@@ -18,16 +18,15 @@ import {
   LinkShortner,
 } from "../API/axiosRequests";
 
-function Home({ userData }) {
+function Home({ userData, setUserData }) {
   const [query, setQuery] = useState(null);
   const [userLinks, setUserLinks] = useState([]);
-  const [run, setRun] = useState(false);
   const { token } = userData;
 
   useEffect(() => {
     if (query === null) return;
     LinkShortner(query, token).then(
-      (response) => console.log(response),
+      () => setQuery({ url: null }),
       (error) => {
         console.log(error);
       }
@@ -38,11 +37,11 @@ function Home({ userData }) {
     getUserData(token).then(
       (response) => {
         setUserLinks(response.data.shortenedUrls);
-        setRun(!run);
+        setUserData({ ...userData, name: response.data.name });
       },
       (error) => console.log(error)
     );
-  }, [token, query, run]);
+  }, [token, query, setUserData, userData]);
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -58,7 +57,7 @@ function Home({ userData }) {
   };
   const linkDeletion = (id) => {
     deleteLink(id, token).then(
-      (response) =>
+      () =>
         getUserData(token).then(
           (response) => {
             setUserLinks(response.data.shortenedUrls);
@@ -72,7 +71,7 @@ function Home({ userData }) {
   };
   return (
     <>
-      <Header isLoggedIn />
+      <Header userData={userData} isLoggedIn />
       <HomeContainer>
         <ShortnerContainer>
           <LinkForm onSubmit={handleForm}>
@@ -82,9 +81,13 @@ function Home({ userData }) {
         </ShortnerContainer>
         <UserLinks>
           {userLinks.map((value) => (
-            <ShortnedLink>
+            <ShortnedLink key={value.id}>
               <p>{value.url}</p>
-              <a href={goToUrl(value.shortUrl)}>
+              <a
+                href={goToUrl(value.shortUrl)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <p>{value.shortUrl}</p>
               </a>
               <p> Quantidade de visitante: {value.visitCount}</p>
