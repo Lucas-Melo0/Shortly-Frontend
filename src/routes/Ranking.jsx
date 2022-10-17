@@ -33,7 +33,7 @@ function Ranking({ userData }) {
 
   return (
     <>
-      <Header isLoggedIn={loggedIn} />
+      <Header userData={userData} isLoggedIn={loggedIn} />
       <Wrapper>
         {isLoading ? (
           <Oval />
