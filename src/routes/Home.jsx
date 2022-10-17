@@ -27,21 +27,6 @@ function Home({ userData, setUserData }) {
   const isLoading = status === "loading";
 
   useEffect(() => {
-    if (query === null) return;
-    setStatus("loading");
-
-    LinkShortner(query, token).then(
-      () => {
-        setStatus("sucess");
-        setQuery({ url: null });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }, [query, token]);
-
-  useEffect(() => {
     getUserData(token).then(
       (response) => {
         setUserLinks(response.data.shortenedUrls);
@@ -49,18 +34,22 @@ function Home({ userData, setUserData }) {
       },
       (error) => console.log(error)
     );
-  }, [token, query, setUserData, userData]);
+  }, [token, query]);
 
   const handleForm = (e) => {
     e.preventDefault();
     const { url } = e.target.elements;
     setQuery({ url: url.value });
-    url.value = null;
-    getUserData(token).then(
-      (response) => {
-        setUserLinks(response.data.shortenedUrls);
+    setStatus("loading");
+    LinkShortner({ url: url.value }, token).then(
+      () => {
+        setQuery({ url: url.value });
+        setStatus("sucess");
+        url.value = null;
       },
-      (error) => console.log(error)
+      (error) => {
+        console.log(error);
+      }
     );
   };
   const linkDeletion = (id) => {
