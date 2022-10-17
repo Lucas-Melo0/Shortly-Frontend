@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
 import { LoginContainer, Form } from "../components/Containers/loginContainer";
 import { Button } from "../components/Buttons/GreenButton";
 import { signin } from "../API/axiosRequests";
 import { Header } from "../components/Header";
 
+// eslint-disable-next-line react/prop-types
 function Login({ setUserData, userData }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
 
   const isLoading = status === "loading";
-  const isSucess = status === "sucess";
   const isError = status === "error";
 
   useEffect(() => {
@@ -48,7 +49,10 @@ function Login({ setUserData, userData }) {
           <input id="email" placeholder="Email" required />
           <input id="password" placeholder="Senha" required />
           {isError && <h5>Dados incorretos</h5>}
-          <Button type="submit" Name="Entrar" />
+          <Button
+            type="submit"
+            Name={isLoading ? <Oval color="white" height={40} /> : "Entrar"}
+          />
         </Form>
       </LoginContainer>
     </>

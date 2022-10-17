@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { BsTrashFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
+import { Oval } from "react-loader-spinner";
 import { Button } from "../components/Buttons/GreenButton";
 import {
   HomeContainer,
@@ -20,13 +21,20 @@ import {
 
 function Home({ userData, setUserData }) {
   const [query, setQuery] = useState(null);
+  const [status, setStatus] = useState("idle");
   const [userLinks, setUserLinks] = useState([]);
   const { token } = userData;
+  const isLoading = status === "loading";
 
   useEffect(() => {
     if (query === null) return;
+    setStatus("loading");
+
     LinkShortner(query, token).then(
-      () => setQuery({ url: null }),
+      () => {
+        setStatus("sucess");
+        setQuery({ url: null });
+      },
       (error) => {
         console.log(error);
       }
@@ -76,7 +84,12 @@ function Home({ userData, setUserData }) {
         <ShortnerContainer>
           <LinkForm onSubmit={handleForm}>
             <input id="url" placeholder="Links que cabem no bolso" required />
-            <Button type="submit" Name="Encurtar Link" />
+            <Button
+              type="submit"
+              Name={
+                isLoading ? <Oval color="white" height={40} /> : "Encurtar Link"
+              }
+            />
           </LinkForm>
         </ShortnerContainer>
         <UserLinks>

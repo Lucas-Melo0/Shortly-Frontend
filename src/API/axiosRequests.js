@@ -1,6 +1,6 @@
 import { axiosBase } from "./axiosBase";
 
-const BASE_URL = "http://localhost:4000";
+const BASE_URL = "https://shortly-backen.herokuapp.com";
 const signup = (data) => axiosBase.post("/signup", data);
 const signin = (data) => axiosBase.post("/signin", data);
 const getInfo = () => axiosBase.get("/ranking");
