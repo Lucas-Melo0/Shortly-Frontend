@@ -47,7 +47,7 @@ function Login({ setUserData, userData }) {
       <LoginContainer>
         <Form onSubmit={handleSubmit}>
           <input id="email" placeholder="Email" required />
-          <input id="password" placeholder="Senha" required />
+          <input id="password" type="password" placeholder="Senha" required />
           {isError && <h5>Dados incorretos</h5>}
           <Button
             type="submit"
